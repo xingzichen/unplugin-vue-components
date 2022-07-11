@@ -55,22 +55,22 @@ function getSideEffectsLegacy(
 
   if (importStyle === 'sass') {
     return [
-      'element-plus/packages/theme-chalk/src/base.scss',
-      `element-plus/packages/theme-chalk/src/${partialName}.scss`,
+      '@lt13.10/element-plus/packages/theme-chalk/src/base.scss',
+      `@lt13.10/element-plus/packages/theme-chalk/src/${partialName}.scss`,
     ]
   }
   else if (importStyle === true || importStyle === 'css') {
     return [
-      'element-plus/lib/theme-chalk/base.css',
-      `element-plus/lib/theme-chalk/el-${partialName}.css`,
+      '@lt13.10/element-plus/lib/theme-chalk/base.css',
+      `@lt13.10/element-plus/lib/theme-chalk/el-${partialName}.css`,
     ]
   }
 }
 
 function getSideEffects(dirName: string, options: ElementPlusResolverOptionsResolved): SideEffectsInfo | undefined {
   const { importStyle, ssr } = options
-  const themeFolder = 'element-plus/theme-chalk'
-  const esComponentsFolder = 'element-plus/es/components'
+  const themeFolder = '@lt13.10/element-plus/theme-chalk'
+  const esComponentsFolder = '@lt13.10/element-plus/es/components'
 
   if (importStyle === 'sass')
     return ssr ? `${themeFolder}/src/${dirName}.scss` : `${esComponentsFolder}/${dirName}/style/index`
@@ -99,21 +99,21 @@ function resolveComponent(name: string, options: ElementPlusResolverOptionsResol
   if (cv.compare(version, '1.1.0-beta.1', '>=')) {
     return {
       name,
-      from: `element-plus/${ssr ? 'lib' : 'es'}`,
+      from: `@lt13.10/element-plus/${ssr ? 'lib' : 'es'}`,
       sideEffects: getSideEffects(partialName, options),
     }
   }
   // >=1.0.2-beta.28
   else if (cv.compare(version, '1.0.2-beta.28', '>=')) {
     return {
-      from: `element-plus/es/el-${partialName}`,
+      from: `@lt13.10/element-plus/es/el-${partialName}`,
       sideEffects: getSideEffectsLegacy(partialName, options),
     }
   }
   // for <=1.0.1
   else {
     return {
-      from: `element-plus/lib/el-${partialName}`,
+      from: `@lt13.10/element-plus/lib/el-${partialName}`,
       sideEffects: getSideEffectsLegacy(partialName, options),
     }
   }
@@ -139,7 +139,7 @@ function resolveDirective(name: string, options: ElementPlusResolverOptionsResol
   if (cv.compare(version, '1.1.0-beta.1', '>=')) {
     return {
       name: directive.importName,
-      from: `element-plus/${ssr ? 'lib' : 'es'}`,
+      from: `@lt13.10/element-plus/${ssr ? 'lib' : 'es'}`,
       sideEffects: getSideEffects(directive.styleName, options),
     }
   }
@@ -165,7 +165,7 @@ export function ElementPlusResolver(
       return optionsResolved
     optionsResolved = {
       ssr: false,
-      version: await getPkgVersion('element-plus', '2.2.2'),
+      version: await getPkgVersion('@lt13.10/element-plus', '2.2.2'),
       importStyle: 'css',
       directives: true,
       exclude: undefined,
